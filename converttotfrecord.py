@@ -5,6 +5,7 @@ import os
 import shutil
 import sys
 import tarfile
+import zipfile
 
 import tensorflow as tf
 from IPython.display import display
@@ -43,8 +44,10 @@ def download_and_extract(data_dir, print_progress=True):
         print()
         statinfo = os.stat(filepath)
         print("Successfully downloaded", filename, statinfo.st_size, "bytes.")
-
-    tarfile.open(filepath, "r:gz").extractall(data_dir)
+    
+    with zipfile.ZipFile(filepath, 'r') as zip_ref:
+    zip_ref.extractall(data_dir)
+    #tarfile.open(filepath, "r:gz").extractall(data_dir)
 
 
 def _int64_feature(value):
